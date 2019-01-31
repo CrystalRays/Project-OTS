@@ -2,7 +2,7 @@
 
 <p align=center><img src="https://upload.cc/i1/2019/01/31/AY5KMD.png" width=600/></p>
 
-<p align="center">Online Exam System written on Python 3. Your can first try it on [ots.icystal.top](https://ots.icystal.top).<br>基于Python 3的在线考试系统。你可以先在[这里](https://ots.icystal.top)体验这个考试系统。</p>
+<p align="center">Online Exam System written on Python 3. Your can first try it on <a href="https://ots.icystal.top">ots.icystal.top</a>.<br>基于Python 3的在线考试系统。你可以先在<a href="https://ots.icystal.top">这里</a>体验这个考试系统。</p>
 
 ## Function功能
 

@@ -9,7 +9,7 @@ import importlib
 
 app = Flask(__name__)
 app.config['SECRET_KEY']=datetime.now().strftime('%b-%d-%Y %H:%M:%S')
-encryptkey='qdded'
+
 def getallpage(testname):
     conn=sqlite3.connect("DT.db")
     cursor=conn.cursor()
@@ -923,6 +923,9 @@ if __name__ == '__main__':
         print("设置管理员账号：")
         name=input("请输入用户名：")
         pwd=input("请输入密码：")
+        encryptkey=input("请输入数据库加密密匙：")
+        with open("key","w",encoding="utf-8") as keyf:
+            keyf.write(encryptkey)
         try:cursor.execute("insert into userdata (username,password,usertype) values ('"+name+"','"+encrypt(pwd,encryptkey)+"',1)")
         except:
             print("未知错误,请删除DT.db后重试")
@@ -950,8 +953,14 @@ if __name__ == '__main__':
         cursor.execute("commit")
     cursor.close
     conn.close
-    a=input("请输入服务器ip:")
-    app.run(host=a, port=80)
+    with open("key","r",encoding="utf-8") as keyf:
+        encryptkey=keyf.read()
+    while True:
+        a=input("请输入服务器ip:")
+        b=input("请输入服务器端口号:")
+        try:app.run(host=a, port=int(b))
+        except:
+            print("ip或端口号不可用请重试")
     print("")
 
 

@@ -1,6 +1,6 @@
 # Project-OTS
 
-![Preview](https://upload.cc/i1/2019/01/31/05qwn7.png)
+<p align=center><img src="https://upload.cc/i1/2019/01/31/05qwn7.png" width=600/></p>
 
 <p align="center">Online Exam System written on Python 3. Your can first try it on [ots.icystal.top](https://ots.icystal.top).<br>基于Python 3的在线考试系统。你可以先在[这里](https://ots.icystal.top)体验这个考试系统。</p>
 
@@ -44,9 +44,7 @@ Tip: Following only to introduce the usage in LAN,
 
    在浏览器中访问你的ip地址，用你刚设置的管理员账户登录
 
-   # 
-
-![Example](https://upload.cc/i1/2019/01/31/4rVEgw.png)
+<p align=center><img width=600 src="https://upload.cc/i1/2019/01/31/4rVEgw.png" /></p>
 
 ### Usage for students学生使用
 
@@ -84,4 +82,5 @@ The grader‘s .py file should include a function named calc which receive two p
 
 评分器的.py文件应该包含名为calc的函数作为入口函数，该函数接受两个参数，第一个是学生的答案，第二个是标准答案，并且返回一个≥0且≤1的数作为正答率。这个.py文件应该和run.py放在同一个目录下。
 
-![clangcalc](https://upload.cc/i1/2019/01/31/5Vtqdb.png)
+<p align=center><img width = '400'  src ="https://upload.cc/i1/2019/01/31/5Vtqdb.png"/></p>
+

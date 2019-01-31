@@ -1,0 +1,23 @@
+{% for each in data_list %}
+            <form class="list" id="{{managetool}}{{each[0][0]}}" action="/watch/{{managetool}}" method="POST">
+                {%for i in range(0,len)%}
+                {%if column_list[i][0]=="结果"%}
+                <div id="result" class="column"style="width:{{column_list[i][1]}};font-size:16px;">{{each[i][0]}}</div>
+                {%elif column_list[i][0]=="操作"%}
+                    <div class="column" style="width:{{column_list[i][1]}};">
+                    {%for j in each[i][0]%}
+                    {% if j=="查看" or j=="成绩"%}
+                        <button type="submit" name="operate" class="operater" id="{{each[0][0]}}" value="{{j}}">{{j}}</button>
+                    {%else%}
+                        <button type="button" name="operate" class="operater" id="{{each[0][0]}}" value="{{j}}">{{j}}</button>
+                    {%endif%}
+                    {%endfor%}
+                    </div>
+                {%elif each[i][1]==1 %}
+                <div class="column" style="padding-top:0px;padding-bottom:0px;height:34px;"><input  name="{{column_list[i][0]}}" style="border:none;height:33px;width:{{column_list[i][1]}};" placeholder="Add new" value="{{each[i][0]}}"></div>
+                {%else%}
+                <div class="column" style="padding-top:0px;padding-bottom:0px;height:34px;"><input  readonly="readonly" name="{{column_list[i][0]}}" style="border:none;height:33px;width:{{column_list[i][1]}};" placeholder="Add new" value="{{each[i][0]}}"></div>
+                {%endif%}
+                {%endfor%}
+            </form>
+            {% endfor %}

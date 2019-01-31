@@ -1,0 +1,51 @@
+﻿<html>
+    <head>
+        <title>Home Page——Project OTS</title>
+        <link rel="stylesheet" href="/style.css" type="text/css" />
+    </head>
+    <body class="body">
+        <div class="cbl">
+            <div class="cblcenter">
+                <div class="sign"> Project OTS</div>
+                <div id="userstatus" style="display: {{statusvi}};">
+                    <div style="margin-left:10px;">{{greeting}}，{{username}}！</div>
+                    <div class="inputclass">
+                        <form action="/signout" method="post" style="width:110px;float:right;margin-left:5px;">
+                            <button class="inputbutton" type="submit">登出</button>
+                        </form>
+                        <form action="/changepwd" method="post" style="width:110px;margin-right:5px;">
+                            <button class="inputbutton" type="submit">修改密码</button>
+                        </form>
+                        
+                    </div>
+                </div>
+                <div id="userlogin" style="display: {{loginvi}};">
+                    <form action="/signin" method="post" style="text-align: left;">
+                        <legend style="text-align: center;color: white;">用户登录</legend>
+                        <div style="color:red;font-size: 15px;text-align: center;">{{error}}</div>
+                        <div class="inputclass">
+                            用户名
+                            <input class="inputbox" name="username" placeholder="Username">
+                        </div>
+                        <div class="inputclass">
+                            密码
+                            <input  class="inputbox" name="password" placeholder="Password" type="password">
+                        </div>
+                        <div class="inputclass">
+                            <button class="inputbutton" type="submit">登录</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="copyright">©2019 CrystalRays</div>
+            </div>
+        </div>
+        <div class="content"><a href="/" id="back" >&lt;</a><a href="/admin" id="management" style="display:{{typevi}};" >管理中心</a>
+            <div class="tittlebar"><span class="tittle">信息</span><div class="line"></div></div>
+            <div style="min-height: 140px;margin:0px 20px 0px 20px;">
+                    <a href="/" class="infobox"><div style="text-align: center;font-family: 'Microsoft Yahei UI';">{{ info }}</div><br><div style="font-size:15px;">{{detail}}</div></a>
+                </div>
+        </div>
+    </body>
+
+        
+</html> 

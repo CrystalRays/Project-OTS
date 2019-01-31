@@ -1,0 +1,79 @@
+﻿<html>
+    <head>
+        <title>Home Page——Project OTS</title>
+        <link rel="stylesheet" href="/style.css" type="text/css" />
+    </head>
+    <body class="body">
+        <div class="cbl" >
+            <div class="cblcenter" >
+                <div class="sign"> Project OTS</div>
+                <div id="userstatus" style="display: {{statusvi}};">
+                    <div style="margin-left:10px;">{{greeting}}，{{username}}！</div>
+                    <div class="inputclass">
+                        <form action="/signout" method="post" style="width:110px;float:right;margin-left:5px;">
+                            <button class="inputbutton" type="submit">登出</button>
+                        </form>
+                        <form action="/changepwd" method="post" style="width:110px;margin-right:5px;">
+                            <button class="inputbutton" type="submit">修改密码</button>
+                        </form>
+                        
+                    </div>
+                </div>
+                <div id="userlogin" style="display: {{loginvi}};">
+                    <form action="/signin" method="post" style="text-align: left;">
+                        <legend style="text-align: center;">用户登录</legend>
+                        <div style="color:red;font-size: 18px;text-align: center;">{{error}}</div>
+                        <div class="inputclass">
+                            用户名
+                            <input class="inputbox" name="username" placeholder="Username">
+                        </div>
+                        <div class="inputclass">
+                            密码
+                            <input  class="inputbox" name="password" placeholder="Password" type="password">
+                        </div>
+                        <div class="inputclass">
+                            <button class="inputbutton" type="submit">登录</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="copyright">©2019 CrystalRays</div>
+            </div>
+        </div>
+        <div class="content">
+            <a href="/" id="back" >&lt;</a>
+            <div class="tittlebar">
+                <span class="tittle">测试:{{testname}}</span>
+                <div class="line"></div>
+                <div  style="padding: 0px 10px 0px 10px;">
+                    <div class="tittlebar">
+                        <span class="tittle">得分:{{grade}}</span>
+                        <div class="line"></div>
+                    </div>
+                    {% for i in result %}
+                    <div class="questionbox">
+                        <div style="float:left;">{{ i[0] }}</div>
+                        <div style="position: relative;margin-left:50px;font-size: 18px;font-family: 'Microsoft Yahei UI Light';">
+                            {{i[4]}}
+                        </div>
+                    </div>
+                    {% endfor %}
+                    <div class="tittlebar">
+                        <span class="tittle">答卷:{{testname}}</span>
+                        <div class="line"></div>
+                    </div>
+                    {% for i in question_list %}
+                    <div class="questionbox">
+                        <div style="float:left;">{{ i[0] }}</div>
+                        <div style="position: relative;margin-left:50px;font-size: 18px;font-family: 'Microsoft Yahei UI Light';">
+                            ({{i[3]}}分) {{i[2]|safe}}
+                            <textarea readonly="readonly" style="height: 80px;width:100%;max-width:100%;resize:vertical;font-family: 'Microsoft Yahei UI';font-size:15px;" name="{{i[0]}}">{{i[4]}}</textarea>
+                        </div>
+                </div>
+            {% endfor %}
+            </div>
+            </div>
+        </div>
+    </body>
+
+        
+</html> 

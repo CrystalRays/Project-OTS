@@ -1,0 +1,146 @@
+<html><head>
+    <title>Home Page——Project OTS</title>
+    <link rel="stylesheet" href="/style.css" type="text/css">
+    <script src="/jquery-3.3.1.js"></script>
+</head>
+<body class="body">
+    <div class="cbl">
+        <div class="cblcenter">
+            <div class="sign"> Project OTS</div>
+            <div id="userstatus" style="display: {{statusvi}};">
+                <div style="margin-left:10px;">{{greeting}}，{{username}}！</div>
+                <div class="inputclass">
+                    <form action="/signout" method="post" style="width:110px;float:right;margin-left:5px;">
+                        <button class="inputbutton" type="submit">登出</button>
+                    </form>
+                    <form action="/changepwd" method="post" style="width:110px;margin-right:5px;">
+                        <button class="inputbutton" type="submit">修改密码</button>
+                    </form>
+                    
+                </div>
+            </div>
+            <div id="userlogin" style="display: {{loginvi}};">
+                <form action="/signin" method="post" style="text-align: left;">
+                    <legend style="text-align: center;color: white;">用户登录</legend>
+                    <div style="color:red;font-size: 15px;text-align: center;">{{error}}</div>
+                    <div class="inputclass">
+                        用户名
+                        <input class="inputbox" name="username" placeholder="Username">
+                    </div>
+                    <div class="inputclass">
+                        密码
+                        <input class="inputbox" name="password" placeholder="Password" type="password">
+                    </div>
+                    <div class="inputclass">
+                        <button class="inputbutton" type="submit">登录</button>
+                    </div>
+                </form>
+            </div>
+            {% for i in manage_list %}
+            <a class="tool" href="/admin/{{i[0]}}" style="{%if i[0]==managetool%}background:black;{%endif%}">
+                {{i[0]}}
+            </a>
+            {% endfor %}
+            <div class="copyright">©2019 CrystalRays</div>
+        </div>
+    </div>
+    <div class="content"><a href="/admin" id="back" >&lt;</a>
+        <a href="/admin" id="management" style="display:{{typevi}};">管理中心</a>
+        <div class="tittlebar">
+            <span class="tittle">管理中心:{{managetool}}</span>
+            <div class="line"></div>
+        </div>
+        <div class="questionbox">
+            <div class="line"></div>
+            <div class="list">
+                {%for i in column_list%}
+                <span class="column" style="width:{{i[1]}};">{{i[0]}}</span>
+                {%endfor%}
+            </div>
+            {% for each in data_list %}
+            <form class="list" id="{{managetool}}{{each[0][0]}}" action="/watch/{{managetool}}" method="POST">
+                {%for i in range(0,len)%}
+                {%if column_list[i][0]=="结果"%}
+                <div id="result" class="column"style="width:{{column_list[i][1]}};font-size:16px;">{{each[i][0]}}</div>
+                {%elif column_list[i][0]=="操作"%}
+                    <div class="column" style="width:{{column_list[i][1]}};">
+                    {%for j in each[i][0]%}
+                    {% if j=="查看" or j=="成绩"%}
+                        <button type="submit" name="operate" class="operater" id="{{each[0][0]}}" value="{{j}}">{{j}}</button>
+                    {%else%}
+                        <button type="button" name="operate" class="operater" id="{{each[0][0]}}" value="{{j}}">{{j}}</button>
+                    {%endif%}
+                    {%endfor%}
+                    </div>
+                {%elif each[i][1]==1 %}
+                <div class="column" style="padding-top:0px;padding-bottom:0px;height:34px;"><input  name="{{column_list[i][0]}}" style="border:none;height:33px;width:{{column_list[i][1]}};" placeholder="Add new" value="{{each[i][0]}}"></div>
+                {%else%}
+                <div class="column" style="padding-top:0px;padding-bottom:0px;height:34px;"><input  readonly="readonly" name="{{column_list[i][0]}}" style="border:none;height:33px;width:{{column_list[i][1]}};" placeholder="Add new" value="{{each[i][0]}}"></div>
+                {%endif%}
+                {%endfor%}
+            </form>
+            {% endfor %}
+            <div style="height:0px;" id="insertxy"></div>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function(){
+            $(document).on("click","button[id][name='operate']",function(){
+                if($(this).val()!="查看"&&$(this).val()!="成绩"){
+                    su=this;
+                    $.post("/operate/{{managetool}}",$(this).parent().parent().serialize()+"&"+this.name+"="+this.value,function(data,status){
+                        if($(su).val()=="更新"){
+                            $(su).parent().nextAll("#result").html(data);
+                        }
+                        else if($(su).val()=="删除"){
+                            $(su).parent().nextAll("#result").html(data);
+                            if(data!="删除失败"){
+                                ca= $(su).parent().parent()
+                                ca.children().remove()
+                            lll=setInterval(function(){
+                                if(ca.css("opacity")!=0){
+                                    ca.css("opacity",ca.css("opacity")-0.1);
+                                }
+                                else if(ca.height()!=0){
+                                    ca.height(ca.height()-1);
+                                }
+                                else{
+                                    ca.remove();
+                                    clearInterval(lll);
+                                }
+                            },10);
+                            };
+                        }
+                        else if($(su).val()=="添加"||$(su).val()=="添加并开始"){
+                            if(data!="添加失败"){$('#insertxy').before(data);
+                            $(su).parent().nextAll("#result").html("添加成功");}
+                            else{$(su).parent().nextAll("#result").html(data);};
+                        }
+                        else if($(su).val()=="开始"){
+                            if(data!="操作失败"){
+                                $(su).html("结束");
+                                $(su).val("结束");
+                                $(su).parent().parent().find("[name='状态']").val("正在进行");
+                            };
+                            $(su).parent().nextAll("#result").html(data);
+                            
+                        }
+                        else if($(su).val()=="结束"){
+                            if(data!="操作失败"){
+                                $(su).html("开始");
+                                $(su).val("开始");
+                                $(su).parent().parent().find("[name='状态']").val("已结束");
+                            };
+                            $(su).parent().nextAll("#result").html(data);
+                        };
+                    });
+                }
+                else{
+                   // $(this).parent().parent().submit();
+                };
+            });
+        });
+    </script>
+
+    
+</body></html>

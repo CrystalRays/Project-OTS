@@ -1,0 +1,152 @@
+<html>
+    <head>
+        <title>Home Page——Project OTS</title>
+        <link rel="stylesheet" href="/style.css" type="text/css" />
+        <script src="/jquery-3.3.1.js"></script>
+    </head>
+    <body class="body">
+        <div class="cbl" >
+            <div class="cblcenter" >
+                <div class="sign"> Project OTS</div>
+                <div id="userstatus" style="display: {{statusvi}};">
+                    <div style="margin-left:10px;">{{greeting}}，{{username}}！</div>
+                    <div class="inputclass">
+                        <form action="/signout" method="post" style="width:110px;float:right;margin-left:5px;">
+                            <button class="inputbutton" type="submit">登出</button>
+                        </form>
+                        <form action="/changepwd" method="post" style="width:110px;margin-right:5px;">
+                            <button class="inputbutton" type="submit">修改密码</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">©2019 CrystalRays</div>
+        </div>
+        <div class="content">
+            <a href="/admin/考试管理" id="back" >&lt;</a>
+            <div class="tittlebar">
+                <span class="tittle">考试管理:{{testname}}</span>
+                <div class="line"></div>
+            </div>
+            <div class="questionbox">
+                <div class="line"></div>
+                <div class="list">
+                    {%for i in column_list%}
+                    <span class="column" style="width:{{i[1]}};">{{i[0]}}</span>
+                    {%endfor%}
+                </div>
+                {% for each in data_list %}
+                <form class="list" id="{{managetool}}{{each[0][0]}}" action="/watch/{{managetool}}" method="POST">
+                    {%for i in range(0,len1)%}
+                    {%if column_list[i][0]=="结果"%}
+                    <div id="result" class="column"style="width:{{column_list[i][1]}};font-size:16px;">{{each[i][0]}}</div>
+                    {%elif column_list[i][0]=="操作"%}
+                        <div class="column" style="width:{{column_list[i][1]}};">
+                        {%for j in each[i][0]%}
+                        <button type="button" name="operate" class="operater" id="{{each[0][0]}}" value="{{j}}">{{j}}</button>
+                        {%endfor%}
+                        </div>
+                    {%elif each[i][1]==1 %}
+                    <div class="column" style="padding-top:0px;padding-bottom:0px;height:34px;"><input  name="{{column_list[i][0]}}" style="border:none;height:33px;width:{{column_list[i][1]}};" placeholder="Add new" value="{{each[i][0]}}"></div>
+                    {%else%}
+                    <div class="column" style="padding-top:0px;padding-bottom:0px;height:34px;"><input  readonly="readonly" name="{{column_list[i][0]}}" style="border:none;height:33px;width:{{column_list[i][1]}};" placeholder="Add new" value="{{each[i][0]}}"></div>
+                    {%endif%}
+                    {%endfor%}
+                </form>
+                {% endfor %}
+                <div style="height:0px;" id="insertxy"></div>
+            </div>
+            <div class="tittlebar">
+                <span class="tittle">题库编辑:{{basename}}</span>
+                <div class="line"></div>
+                <div  style="padding: 0px 10px 0px 10px;">
+                    <div class="tittlebar">
+                        {% for i in  type_list%}
+                        <span class="tittle" id="{{i[0]}}" style="margin-right:10px;cursor: hand;" >{{i[0]}}</span>
+                        {% endfor %}
+                        <span id="add1"></span>
+                        <span class="tittle" id="*" style="margin-right:10px;cursor: hand;display:none;" >新建</span>
+                        <div class="line"></div>
+                    </div>
+                    {% for each in range(0,len2) %}
+                    <div id="{{type_list[each][0]}}" style="display: none;">
+                        <form class="questionbox" >
+                            <div style="float:left;width:40px;">*
+                            </div>
+                            <button name="id" type="button" value="*" style="margin-bottom:10px;float:right;">添加</button>
+                            <input name="scorecalc" value="standard" style="width:100px;float:left;">
+                            <div id="status" style="font-size:18px;padding-left:20px;font-size:18px;padding-left:20px;width:200px;display:inline-block;text-align:center;">载入成功</div>
+                        
+                            <div style="position: relative;margin-left:50px;font-size: 18px;font-family: 'Microsoft Yahei UI Light';">
+                                <textarea style="height: 80px;width:100%;max-width:100%;resize:vertical;font-family: 'Microsoft Yahei UI';font-size:15px;" name="question"></textarea>
+                                <textarea style="height: 80px;width:100%;max-width:100%;resize:vertical;font-family: 'Microsoft Yahei UI';font-size:15px;" name="answer"></textarea>
+                            </div>
+                        </form>
+                        {% for i in question_list[each]%}
+                        <form class="questionbox" >
+                            <div style="float:left;width:40px;"><input type="checkbox">{{ i[0] }}
+                            </div>
+                            <button name="id" type="button" value="{{i[0]}}" style="margin-bottom:10px;float:right;">保存</button>
+                            <input name="scorecalc" value="{{i[3]}}" style="width:100px;float:left;">
+                            <div id="status" style="font-size:18px;padding-left:20px;font-size:18px;padding-left:20px;width:200px;display:inline-block;text-align:center;">载入成功</div>
+                        
+                            <div style="position: relative;margin-left:50px;font-size: 18px;font-family: 'Microsoft Yahei UI Light';">
+                                <textarea style="height: 80px;width:100%;max-width:100%;resize:vertical;font-family: 'Microsoft Yahei UI';font-size:15px;" name="question">{{i[1]}}</textarea>
+                                <textarea style="height: 80px;width:100%;max-width:100%;resize:vertical;font-family: 'Microsoft Yahei UI';font-size:15px;" name="answer">{{i[2]}}</textarea>
+                            </div>
+                        </form>
+                        {% endfor %}
+                        <div id="add3"></div>
+                    </div>
+                    {% endfor %}
+                    <div id="add2"></div>
+                </div>
+            </div>
+        </div>
+        <script>
+            $(document).ready(function(){
+                $("div#{{type_list[0][0]}}").css("display","block");
+                $("span#{{type_list[0][0]}}").css({"background-color":"#09F","color":"#FFF"});
+                $(document).on("click","span[class='tittle'][id]",function(){
+                    $(this).siblings("span[class='tittle'][id]").css({"background-color":"whitesmoke","color":"#09F"});
+                    $(this).css({"background-color":"#09F","color":"#FFF"});
+                    $("div#"+this.id).css("display","block");
+                    $("div#"+this.id).siblings("div[id]").css("display","none");
+                })
+                $(document).on("click","button[name='id']",function(){
+                    su=this;
+                    $.post("/tksave",'&question='+encodeURIComponent($(su).parent().find("textarea[name='question']").val())+"&"+"answer="+encodeURIComponent($(su).parent().find("textarea[name='answer']").val())+"&id="+$(su).val()+"&scorecalc="+$(su).nextAll("input[name='scorecalc']").val()+"&type="+$(su).parent().parent().attr('id')+"&basename={{basename}}",function(data,status){
+                        if($(su).val()=="*"){
+                            if(data!="添加失败")
+                            {
+                                $(su).parent().parent().find("#add3").before(data);
+                                $(su).nextAll("#status").html("添加成功");
+                            }
+                            else
+                            {
+                                $(su).nextAll("#status").html(data);
+                            };
+                        }
+                        else{
+                            $(su).nextAll("#status").html(data);
+                        };
+                    });
+                });
+                $(document).on("click","button[id][name='operate']",function(){
+                    su=this;
+                    $.post("/testedit",$(this).parent().parent().serialize()+"&"+this.name+"="+this.value+"&testname={{testname}}",function(data,status){
+                        if($(su).val()=="更新"){
+                            $(su).parent().nextAll("#result").html(data);
+                        }
+                        else  if($(su).val()=="添加"||$(su).val()=="添加并开始"){
+                            if(data!="添加失败"&&data!="添加异常"){$('#insertxy').before(data);
+                            $(su).parent().nextAll("#result").html("添加成功");}
+                            else{$(su).parent().nextAll("#result").html(data);};
+                        }
+                    });
+                });
+            
+            });
+        </script>
+    </body> 
+</html> 

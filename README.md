@@ -2,8 +2,7 @@
 
 ![Preview](https://upload.cc/i1/2019/01/31/05qwn7.png)
 
-<center>Online Exam System written on Python 3. Your can first try it on [ots.icystal.top](https://ots.icystal.top).</center>
-<center>基于Python 3的在线考试系统。你可以先在[这里](https://ots.icystal.top)体验这个考试系统。</center>
+<p align="center">Online Exam System written on Python 3. Your can first try it on [ots.icystal.top](https://ots.icystal.top).<br>基于Python 3的在线考试系统。你可以先在[这里](https://ots.icystal.top)体验这个考试系统。</p>
 
 ## Function功能
 
@@ -22,13 +21,15 @@
 ## Requirement环境需求
 
     Python 3 with flask, jinja2, pycryptodome 
-    安装了flask、jinja2和pycryptodome的Python 3
+    
+    安装了flask、jinja2和pycryptodome的Python 3
 
 ## Usage使用说明
 
 Tip: Following only to introduce the usage in LAN,
 
-        It is similar for Internet use except the servershould be able to be accessed through Internet. 
+        It is similar for Internet use except the servershould be able to be accessed through Internet. 
+
 提示：以下仅以局域网使用为例。互联网使用类似，除了需要一台拥有独立互联网ip或者内网映射过的计算机。
 
 ### First time run首次使用

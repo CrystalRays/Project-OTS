@@ -107,3 +107,6 @@ venv.bak/
 *.db
 key
 *.txt
+*.dv
+.vscode
+_pycache_

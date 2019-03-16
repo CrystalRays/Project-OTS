@@ -47,8 +47,8 @@
                                 <div id="status" style="font-size:18px;padding-left:20px;font-size:18px;padding-left:20px;width:200px;display:inline-block;text-align:center;">waiting</div>
 
                             <div style="position: relative;margin-left:50px;font-size: 18px;font-family: 'Microsoft Yahei UI Light';">
-                                <textarea style="height: 80px;width:100%;max-width:100%;resize:vertical;font-family: 'Microsoft Yahei UI';font-size:15px;" name="question"></textarea>
-                                <textarea style="height: 80px;width:100%;max-width:100%;resize:vertical;font-family: 'Microsoft Yahei UI';font-size:15px;" name="answer" placeholder="每个采分点占一行，同一个采分点里同时答到才给分的用&&&间隔，答到一个就给分的用|||间隔，不能答到的用!!!前缀，完全匹配答案请不要加间隔或前缀符。"></textarea>
+                                <textarea style="height: 200px;width:100%;max-width:100%;resize:vertical;font-family: 'Microsoft Yahei UI';font-size:15px;" name="question"></textarea>
+                                <textarea style="height: 200px;width:100%;max-width:100%;resize:vertical;font-family: 'Microsoft Yahei UI';font-size:15px;" name="answer" placeholder="每个采分点占一行，同一个采分点里同时答到才给分的用&&&间隔，答到一个就给分的用|||间隔，不能答到的用!!!前缀，完全匹配答案请不要加间隔或前缀符。"></textarea>
                             </div>
                         </form>
                         {% for i in question_list[each]%}
@@ -60,8 +60,8 @@
                             <div id="status" style="font-size:18px;padding-left:20px;font-size:18px;padding-left:20px;width:200px;display:inline-block;text-align:center;">载入成功</div>
 
                             <div style="position: relative;margin-left:50px;font-size: 18px;font-family: 'Microsoft Yahei UI Light';">
-                                <textarea style="height: 80px;width:100%;max-width:100%;resize:vertical;font-family: 'Microsoft Yahei UI';font-size:15px;" name="question">{{i[1]}}</textarea>
-                                <textarea style="height: 80px;width:100%;max-width:100%;resize:vertical;font-family: 'Microsoft Yahei UI';font-size:15px;" name="answer">{{i[2]}}</textarea>
+                                <textarea style="height: 200px;width:100%;max-width:100%;resize:vertical;font-family: 'Microsoft Yahei UI';font-size:15px;" name="question">{{i[1]}}</textarea>
+                                <textarea style="height: 200px;width:100%;max-width:100%;resize:vertical;font-family: 'Microsoft Yahei UI';font-size:15px;" name="answer">{{i[2]}}</textarea>
                             </div>
                         </form>
                         {% endfor %}

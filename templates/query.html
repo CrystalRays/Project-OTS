@@ -10,7 +10,8 @@
             }
         </style>
     </head>
-    <body class="body">
+    <body class="body"><div id="cover" style="background-color: black;opacity:0.8;position:fixed;height: 100%;width: 100%;z-index:9;display:none;"></div><div id="info" class="infobox" style="min-height:210px;z-index:19;text-align:center;display:none;">
+        <div style="text-align: center;font-family: 'Microsoft Yahei UI';">试卷提交中，请稍候……</div><img src="/load.gif" width="300px;"><div>评分队列剩余  <span id="waitinline" style="font-weight: 1000;font-size: 36px;"> ？ </span>  份</div></div>
         <div class="cbl" >
             <div class="cblcenter" >
                 <div class="sign"> Project OTS</div>
@@ -58,7 +59,7 @@
                     <div style="float:left;">{{ i[0] }}</div>
                     <div style="position: relative;margin-left:50px;font-size: 18px;font-family: 'Microsoft Yahei UI Light';">
                         ({{i[3]}}分) {{i[2]|safe}}
-                        <textarea style="height: 100px;width:100%;max-width:100%;resize:vertical;font-family: 'Microsoft Yahei UI';font-size:15px;" name="{{i[0]}}" placeholder="填空题有多个答案的，每个答案单独占一行">{{i[4]}}</textarea>
+                        <textarea style="height: 200px;width:100%;max-width:100%;resize:vertical;font-family: 'Microsoft Yahei UI';font-size:15px;" name="{{i[0]}}" placeholder="填空题有多个答案的，每个答案单独占一行">{{i[4]}}</textarea>
                     </div>
                 </div>
                 {% endfor %}
@@ -68,6 +69,24 @@
             </form>
         </div>
         <script>
+            $(document).on("click","button",function(){
+                su=this;
+                if($(su).html()=="保存"){
+                    document.getElementById("saver").contentWindow.document.getElementsByTagName("body")[0].innerHTML="正在保存……";
+                }
+                else if($(su).html()=="提交"){
+                    $("#cover").css("display","block");
+                    $("#info").css("display","block");
+                    $.post("/getwaitin","",function(data,status){
+                            $("#waitinline").html(data);
+                        })
+                    setInterval(function(){
+                        $.post("/getwaitin","",function(data,status){
+                            $("#waitinline").html(data);
+                        })
+                    },60000)
+                }
+            })
             setTimeout("document.getElementById(\"o(*￣▽￣*)ブ\").submit()",{{timeout}}*1000);
             setInterval("document.getElementById(\"timeshow\").innerHTML=String(Number(document.getElementById(\"timeshow\").innerHTML)-1)",1000)
             setInterval(function(){
@@ -88,7 +107,7 @@
                     if (data==0){
                         window.location.href="/result/{{testname}}";}
                 });
-            },60000);
+            },120000);
         </script>
     </body>
 

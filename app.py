@@ -9,7 +9,7 @@ import importlib
 
 app = Flask(__name__)
 app.config['SECRET_KEY']=datetime.now().strftime('%b-%d-%Y %H:%M:%S')
-
+waitinline =0
 def getallpage(testname):
     conn=sqlite3.connect("DT.db")
     cursor=conn.cursor()
@@ -297,6 +297,8 @@ def getquestion(stuid,testname):
     conn.close
     return testquestion
 def scorecalc(id,testname):
+    global waitinline
+    waitinline=waitinline+1
     conn=sqlite3.connect('DT.db')
     cursor=conn.cursor()
     cursor.execute("select testbase,id from testdata where testname='"+testname+"'")
@@ -327,6 +329,7 @@ def scorecalc(id,testname):
     cursor.execute("commit")
     cursor.close
     conn.close
+    waitinline=waitinline-1
     return sum
 def calc(answer,stdanswer):
     stdanswer=stdanswer.split("\n")
@@ -425,8 +428,8 @@ def savean(id,testname):
         for each in questionid:
             text=request.form.get(str(each[0]))
             text=text.replace("'","''")
-            print("update user"+str(session.get('id'))+"test"+str(testid[0][0])+" set answer='"+text+"' where id="+str(each[0]))
-            try:cursor.execute("update user"+str(session.get('id'))+"test"+str(testid[0][0])+" set answer='"+text+"' where id="+str(each[0]))
+            print("update user"+str(session.get('id'))+"test"+str(testid[0][0])+" set answer='"+text.replace("\r\n","\n")+"' where id="+str(each[0]))
+            try:cursor.execute("update user"+str(session.get('id'))+"test"+str(testid[0][0])+" set answer='"+text.replace("\r\n","\n")+"' where id="+str(each[0]))
             except:
                 traceback.print_exc()
                 cursor.close
@@ -485,7 +488,10 @@ def istestongoing():
     cursor.close
     conn.close
     return str(a)
-    
+@app.route("/getwaitin",methods=["POST"])
+def waitin():
+    global waitinline
+    return str(waitinline)    
 @app.route('/tksave',methods=["POST"])
 def tksave():
     questionid=request.form.get("id")
@@ -904,6 +910,11 @@ def jq():
 @app.route("/style.css",methods=['get'])
 def css():
     return render_template('style.css')
+@app.route("/load.gif",methods=['get'])
+def loadpic():
+    with open("templates\load.gif","br") as pic:
+        piccon=pic.read()
+    return piccon
 @app.errorhandler(404)
 def page_not_found(e):
     initatom=init()

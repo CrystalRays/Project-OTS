@@ -106,3 +106,4 @@ venv.bak/
 # OTS-settings & database
 *.db
 key
+*.txt

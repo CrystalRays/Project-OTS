@@ -52,7 +52,7 @@ class database(object):
         # tablename 表名 string
         # column_obj column对象或column对象的tuple()的返回值
         # record_list 若干个由record对象的values()方法的返回值组成的列表
-        #所有参数可由table对象的sqlgenerator()方法返回
+        # 所有参数可由table对象的sqlgenerator()方法返回
         if self.chk_connect()==0:
             print(self.__class__.__name__,":创建数据表%s失败，数据库连接已断开"%(tablename))
         else:
@@ -63,7 +63,7 @@ class database(object):
                 self.addrecord(tablename,column_obj,each)
         return 0
     def addrecord(self,*,tablename,cloumn_obj,record_string,**kw):
-        #record_string由record对象的values()方法返回
+        # record_string由record对象的values()方法返回
         # column_obj column对象或column对象的tuple()的返回值
         if isinstance(column_obj,column):
             column_obj=column_obj.tuple()
@@ -71,10 +71,10 @@ class database(object):
         return 0
     
     def chgrecord(self,*,tablename,**kw)
-    #提供多个关键字参数或者字典作为搜索依据，key为字段名，value为对应字段的值，第一对数据作为修改值，其余作为匹配依据
+    # 提供多个关键字参数或者字典作为搜索依据，key为字段名，value为对应字段的值，第一对数据作为修改值，其余作为匹配依据
     
 class table(object):
-    #定义的对象名即为表名
+    # 定义的对象名即为表名
     def __init__(self,*,column_obj=None,record_list=None):
         if column_obj!=None:
             if not(isinstance(column_obj,column)):
@@ -85,7 +85,7 @@ class table(object):
         self.name=self.__name__
         self.info={"name":self.name,"column":self.column}
     def get_record(self,**kw):
-        #提供一个关键字参数或者一个字典作为搜索依据，key为字段名，value为对应字段的值，函数返回一个record对象
+        # 提供一个关键字参数或者一个字典作为搜索依据，key为字段名，value为对应字段的值，函数返回一个record对象
         return 0
 class record(object):
     def __init__(self,*,column_obj=None,):

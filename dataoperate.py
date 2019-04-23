@@ -62,16 +62,36 @@ class database(object):
             for each in record_list:
                 self.addrecord(tablename,column_obj,each)
         return 0
+    
+    def createtable_autoid(self,*,tablename,column_obj,record_list=None,**kw):
+        # 自动添加 id autoincrement primary key
+        # return 0正常结束， return -1 请检查是否重复添加id
+        if isinstance(column_obj,column):
+            column_obj=column_obj.tuple()
+        if "id" in column_obj or "ID" in column_obj:
+            column_obj.replace("(","(id integer autoincrement primary key,")
+            self.createtable(self,tablename=tablename,column_obj=column_obj,record_list=None,**kw)
+            return 0
+        else:
+            return -1
+
     def addrecord(self,*,tablename,cloumn_obj,record_string,**kw):
         # record_string由record对象的values()方法返回
         # column_obj column对象或column对象的tuple()的返回值
+        # 函数返回 0 成功 -1 失败
         if isinstance(column_obj,column):
             column_obj=column_obj.tuple()
-        self.cursor.execute("insert into "+tablename+" "+column_obj+" values "+record_string)
-        return 0
+        try:self.cursor.execute("insert into "+tablename+" "+column_obj+" values "+record_string)
+        except:return -1
+        else:return 0
     
-    def chgrecord(self,*,tablename,**kw)
-    # 提供多个关键字参数或者字典作为搜索依据，key为字段名，value为对应字段的值，第一对数据作为修改值，其余作为匹配依据
+    def addrecord_rid(self,*,tablename,cloumn_obj,record_string,**kw):
+        return 0
+
+    def chgrecord(self,*,tablename,**kw):
+        # 提供多个关键字参数或者字典作为搜索依据，key为字段名，value为对应字段的值，第一对数据作为修改值，其余作为匹配依据
+        if isinstance(kw,dict):
+            for each 
     
 class table(object):
     # 定义的对象名即为表名

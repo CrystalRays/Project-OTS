@@ -846,7 +846,7 @@ def operate(managetool):
                 except:pass
                 try:cursor2.execute("insert into info (type,maxquestionid) values ('writting',0)")
                 except:pass
-                try:cursor2.execute("commit")
+                try:conn2.commit()
                 except:pass
                 cursor2.close
                 conn2.close

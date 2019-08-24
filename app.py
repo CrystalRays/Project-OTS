@@ -10,6 +10,8 @@ import importlib
 app = Flask(__name__)
 app.config['SECRET_KEY']=datetime.now().strftime('%b-%d-%Y %H:%M:%S')
 waitinline =0
+with open("key","r",encoding="utf-8") as keyf:
+    encryptkey=keyf.read()
 def getallpage(testname):
     conn=sqlite3.connect("DT.db")
     cursor=conn.cursor()
@@ -89,7 +91,7 @@ def modifytest(testname,id,type,questionid,point):
                 result="添加成功"
             else:
                 result="添加失败"
-    try:cursor.execute("commit")
+    try:conn.commit()
     except:pass
     cursor.close
     conn.close
@@ -143,7 +145,7 @@ def modifytk(basename,basekey,typel,id,question,answer,scorecalc):
             u=cursor.fetchall()[0]
             cursor.execute("update info set maxquestionid="+str(u[0])+" where type='"+typel+"'")
             i=render_template("search-tk.html",i=[u[0],u[1],decrypt(u[2],basekey),u[3]])
-    try:cursor.execute("commit")
+    try:conn.commit()
     except:i="保存失败"
     cursor.close
     conn.close
@@ -292,7 +294,7 @@ def getquestion(stuid,testname):
         cursor.execute("insert into user"+stuid+"test"+str(testinfo[0][0])+" (questionid,type,answer) values ("+str(each[1])+",'"+each[2]+"','')")
     #记录考生答卷开始
     cursor.execute("insert into user"+stuid+" (testname,answertime,submit) values ('"+testname+"','"+datetime.now().strftime('%b-%d-%Y %H:%M:%S')+"',0)")
-    cursor.execute("commit")
+    try:conn.commit()
     cursor.close
     conn.close
     return testquestion
@@ -326,7 +328,7 @@ def scorecalc(id,testname):
         cursor.execute("update user"+id+"test"+str(testinfo[0][1])+" set score="+score+" where id="+str(each[0]))
     cursor.execute("update user"+id+" set grade="+str(sum)+" where testname='"+testname+"'")
     cursor.execute("update user"+id+" set submit=1 where testname='"+testname+"'")
-    cursor.execute("commit")
+    conn.commit()
     cursor.close
     conn.close
     waitinline=waitinline-1
@@ -437,7 +439,8 @@ def savean(id,testname):
                 return "保存失败"
             else: 
                 result=cursor.rowcount
-                cursor.execute("commit")
+                # conn.commit()
+                conn.commit()
                 if result<=0:
                     cursor.close
                     conn.close
@@ -608,7 +611,7 @@ def changpwd():
             except:detail="未知错误，请检查后重试"
             else:
                 if cursor.rowcount>0:
-                    cursor.execute("commit")
+                    conn.commit()
                     session['id']=0
                     initatom=init()
                     info="修改密码"
@@ -889,7 +892,7 @@ def operate(managetool):
                 returnstr="操作成功"
             else:
                 returnstr="操作失败"
-    try:cursor.execute("commit")
+    try:conn.commit()
     except:pass
     cursor.close
     conn.close
@@ -961,7 +964,7 @@ if __name__ == '__main__':
             cursor.close
             conn.close
             exit()       
-        cursor.execute("commit")
+        conn.commit()
     cursor.close
     conn.close
     with open("key","r",encoding="utf-8") as keyf:

@@ -8,7 +8,7 @@ import traceback
 import importlib
 
 app = Flask(__name__)
-app.config['SECRET_KEY']=datetime.now().strftime('%b-%d-%Y %H:%M:%S')
+app.config['SECRET_KEY']=datetime.now().strftime('%b-%d-%Y %H')
 waitinline =0
 with open("key","r",encoding="utf-8") as keyf:
     encryptkey=keyf.read()
@@ -294,7 +294,12 @@ def getquestion(stuid,testname):
         cursor.execute("insert into user"+stuid+"test"+str(testinfo[0][0])+" (questionid,type,answer) values ("+str(each[1])+",'"+each[2]+"','')")
     #记录考生答卷开始
     cursor.execute("insert into user"+stuid+" (testname,answertime,submit) values ('"+testname+"','"+datetime.now().strftime('%b-%d-%Y %H:%M:%S')+"',0)")
+<<<<<<< HEAD
     try:conn.commit()
+=======
+    try:cursor.execute("commit")
+    except:traceback.print_exc()
+>>>>>>> 95a102cca228e20205dee36fc07bd0d163364be6
     cursor.close
     conn.close
     return testquestion
@@ -439,8 +444,13 @@ def savean(id,testname):
                 return "保存失败"
             else: 
                 result=cursor.rowcount
+<<<<<<< HEAD
                 # conn.commit()
                 conn.commit()
+=======
+                try:cursor.execute("commit")
+                except:traceback.print_exc()
+>>>>>>> 95a102cca228e20205dee36fc07bd0d163364be6
                 if result<=0:
                     cursor.close
                     conn.close

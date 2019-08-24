@@ -294,7 +294,8 @@ def getquestion(stuid,testname):
         cursor.execute("insert into user"+stuid+"test"+str(testinfo[0][0])+" (questionid,type,answer) values ("+str(each[1])+",'"+each[2]+"','')")
     #记录考生答卷开始
     cursor.execute("insert into user"+stuid+" (testname,answertime,submit) values ('"+testname+"','"+datetime.now().strftime('%b-%d-%Y %H:%M:%S')+"',0)")
-    cursor.execute("commit")
+    try:cursor.execute("commit")
+    except:traceback.print_exc()
     cursor.close
     conn.close
     return testquestion
@@ -439,7 +440,8 @@ def savean(id,testname):
                 return "保存失败"
             else: 
                 result=cursor.rowcount
-                cursor.execute("commit")
+                try:cursor.execute("commit")
+                except:traceback.print_exc()
                 if result<=0:
                     cursor.close
                     conn.close

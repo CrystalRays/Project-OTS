@@ -295,6 +295,7 @@ def getquestion(stuid,testname):
     #记录考生答卷开始
     cursor.execute("insert into user"+stuid+" (testname,answertime,submit) values ('"+testname+"','"+datetime.now().strftime('%b-%d-%Y %H:%M:%S')+"',0)")
     try:conn.commit()
+    except:traceback.print_exc()
     cursor.close
     conn.close
     return testquestion

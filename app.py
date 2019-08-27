@@ -8,7 +8,7 @@ import traceback
 import importlib
 
 app = Flask(__name__)
-app.config['SECRET_KEY']=datetime.now().strftime('%b-%d-%Y %H:%M:%S')
+app.config['SECRET_KEY']=datetime.now().strftime('%b-%d-%Y %H')
 waitinline =0
 def getallpage(testname):
     conn=sqlite3.connect("DT.db")

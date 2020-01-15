@@ -914,7 +914,7 @@ def css():
     return render_template('style.css')
 @app.route("/load.gif",methods=['get'])
 def loadpic():
-    with open("templates\load.gif","br") as pic:
+    with open("templates/load.gif","br") as pic:
         piccon=pic.read()
     return piccon
 @app.errorhandler(404)

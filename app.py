@@ -10,6 +10,11 @@ import importlib
 app = Flask(__name__)
 app.config['SECRET_KEY']=datetime.now().strftime('%b-%d-%Y %H')
 waitinline =0
+try:
+    with open("key","r",encoding="utf-8") as keyf:
+        encryptkey=keyf.read()
+        print("读入数据库秘钥：",encryptkey)
+except:pass
 def getallpage(testname):
     conn=sqlite3.connect("DT.db")
     cursor=conn.cursor()
@@ -973,6 +978,5 @@ if __name__ == '__main__':
         except:
             print("ip或端口号不可用请重试")
     print("")
-with open("key","r",encoding="utf-8") as keyf:
-    encryptkey=keyf.read()
+
 
